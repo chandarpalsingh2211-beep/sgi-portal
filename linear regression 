@@ -1,0 +1,46 @@
+# Source Code
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+
+# Sample data
+data = {
+    'Advertising Spend': [1000, 2000, 3000, 4000, 5000],
+    'Sales': [5000, 7000, 9000, 11000, 12000]
+}
+
+# Create a DataFrame
+df = pd.DataFrame(data)
+
+# Features and target variable
+X = df[['Advertising Spend']]   # Features (independent variable)
+y = df['Sales']                 # Target (dependent variable)
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Create a linear regression model
+model = LinearRegression()
+
+# Fit the model
+model.fit(X_train, y_train)
+
+# Make predictions
+y_pred = model.predict(X_test)
+
+# Print the coefficients
+print(f"Slope (m): {model.coef_[0]}")
+print(f"Intercept (b): {model.intercept_}")
+
+# Plotting
+plt.scatter(X, y, color='blue', label='Actual Sales')
+plt.plot(X_test, y_pred, color='red', linewidth=2, label='Predicted Sales')
+plt.title('Linear Regression: Advertising Spend vs Sales')
+plt.xlabel('Advertising Spend ($)')
+plt.ylabel('Sales ($)')
+plt.legend()
+plt.show()
